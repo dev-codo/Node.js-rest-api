@@ -22,7 +22,7 @@ router.get("/:postId", async (req, res) => {
 	}
 });
 
-// post
+// create
 router.post("/", async (req, res) => {
 	console.log(req.body);
 	const post = new Post({

@@ -20,7 +20,6 @@ mongoose
 
 // import route
 const postRoute = require("./routes/posts");
-// Middleware
 app.use("/posts", postRoute);
 
 // Route
@@ -29,4 +28,4 @@ app.get("/", (req, res) => {
 });
 
 // Listen to port
-app.listen(3030);
+app.listen(process.env.DB_PORT);
