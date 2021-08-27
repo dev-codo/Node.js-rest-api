@@ -1,6 +1,7 @@
-const express = require("express");
-const Post = require("../Models/Post");
-const router = express.Router();
+import { Router } from "express";
+import Post from "../Models/Post.js";
+
+const router = Router();
 
 // get all
 router.get("/", async (req, res) => {
@@ -57,7 +58,7 @@ router.patch("/:postId", async (req, res) => {
 				$set: {
 					title: req.body.title,
 					description: req.body.description,
-				}
+				},
 			}
 		);
 		res.json(updateById);
@@ -66,4 +67,4 @@ router.patch("/:postId", async (req, res) => {
 	}
 });
 
-module.exports = router;
+export default router;
