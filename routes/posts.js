@@ -1,69 +1,22 @@
-const express = require("express");
-const Post = require("../Models/Post");
-const router = express.Router();
+import { Router } from "express";
+import {
+	getAllPosts,
+	getPost,
+	createPost,
+	deletePost,
+	updatePost,
+} from "../controllers/posts.js";
 
-// get all
-router.get("/", async (req, res) => {
-	try {
-		const posts = await Post.find();
-		res.json(posts);
-	} catch (err) {
-		res.json({ message_err: err });
-	}
-});
+const router = Router();
 
-// get by id
-router.get("/:postId", async (req, res) => {
-	try {
-		const getById = await Post.findById(req.params.postId);
-		res.json(getById);
-	} catch (err) {
-		res.json({ message_err: err });
-	}
-});
+router.get("/", getAllPosts);
 
-// create
-router.post("/", async (req, res) => {
-	console.log(req.body);
-	const post = new Post({
-		title: req.body.title,
-		description: req.body.description,
-	});
+router.get("/:postId", getPost);
 
-	try {
-		const savedPost = await post.save();
-		res.json(savedPost);
-	} catch (err) {
-		res.json({ message_err: err });
-	}
-});
+router.post("/", createPost);
 
-// delete
-router.delete("/:postId", async (req, res) => {
-	try {
-		const removeById = await Post.remove({ _id: req.params.postId });
-		res.json(removeById);
-	} catch (err) {
-		res.json({ message_err: err });
-	}
-});
+router.delete("/:postId", deletePost);
 
-// update
-router.patch("/:postId", async (req, res) => {
-	try {
-		const updateById = await Post.updateOne(
-			{ _id: req.params.postId },
-			{
-				$set: {
-					title: req.body.title,
-					description: req.body.description,
-				}
-			}
-		);
-		res.json(updateById);
-	} catch (err) {
-		res.json({ message_err: err });
-	}
-});
+router.patch("/:postId", updatePost);
 
-module.exports = router;
+export default router;
